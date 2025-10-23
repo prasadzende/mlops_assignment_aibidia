@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.11-slim'
-            args '-u root -v /var/run/docker.sock:/var/run/docker.sock'  // Run as root user
-        }
-    }
+    agent
 
     triggers {
         pollSCM('* * * * *')  // Poll SCM every minute for changes
@@ -14,8 +9,9 @@ pipeline {
         stage('Install System Dependencies') {
             steps {
                 sh '''
-                    apt-get update
-                    apt-get install -y make curl
+                    sudo apt-get -y update
+                    sudo apt-get install -y make curl python3 python3-pip
+                    python3 -m pip install --user --upgrade pip
                 '''
             }
         }
