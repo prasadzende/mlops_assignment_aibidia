@@ -1,0 +1,6 @@
+scikit-learn
+joblib
+mlflow==3.1.1
+pydantic
+fastapi
+numpy
