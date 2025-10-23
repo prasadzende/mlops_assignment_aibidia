@@ -23,13 +23,13 @@ pipeline {
             }
         }
 
-        stage('Setup Environment') {
-            steps {
-                dir('src/model_src') {
-                    sh 'make setup'
-                }
-            }
-        }
+        // stage('Setup Environment') {
+        //     steps {
+        //         dir('src/model_src') {
+        //             sh 'make setup'
+        //         }
+        //     }
+        // }
 
         stage('Install Dependencies') {
             steps {
