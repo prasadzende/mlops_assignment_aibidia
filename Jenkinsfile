@@ -9,8 +9,8 @@ pipeline {
         stage('Install System Dependencies') {
             steps {
                 sh '''
-                    sudo apt-get -y update
-                    sudo apt-get install -y make curl python3 python3-pip
+                    apt-get -y update
+                    apt-get install -y make curl python3 python3-pip
                     python3 -m pip install --user --upgrade pip
                 '''
             }
