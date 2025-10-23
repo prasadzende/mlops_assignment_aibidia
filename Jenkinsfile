@@ -17,6 +17,16 @@ pipeline {
         //     }
         // }
 
+        stage('Install System Dependencies') {
+            steps {
+                sh '''
+                    brew install python
+                    python3 --version
+                    ln -s -f /usr/local/bin/python3 /usr/local/bin/python
+                '''
+            }
+        }
+
         stage('Checkout') {
             steps {
                 cleanWs()
