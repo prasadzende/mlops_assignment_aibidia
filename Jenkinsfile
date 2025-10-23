@@ -6,11 +6,18 @@ pipeline {
     }
 
     stages {
+        stage('Install System Dependencies') {
+            steps {
+                sh '''
+                    apt-get update
+                    apt-get install -y make curl python3 python3-pip
+                '''
+            }
+        }
+
         stage('Checkout') {
             steps {
-                // Clean workspace before checkout
                 cleanWs()
-                // Checkout code from Git repository
                 checkout scm
             }
         }
@@ -50,7 +57,7 @@ pipeline {
 
     post {
         always {
-            cleanWs()  // Clean workspace after build
+            cleanWs()
         }
     }
 }
