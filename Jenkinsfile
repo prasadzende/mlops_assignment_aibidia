@@ -34,7 +34,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('src/model_src') {
-                    sh 'cd src/model_src && make install'
+                    sh 'la -lrt && make install'
                 }
             }
         }
