@@ -9,8 +9,10 @@ pipeline {
         stage('Install System Dependencies') {
             steps {
                 sh '''
-                    apt-get -y update
-                    apt-get install -y make curl python3 python3-pip
+                    # Give Jenkins user permissions to install packages
+                    echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+                    sudo apt-get -y update
+                    sudo apt-get install -y make curl python3 python3-pip
                     python3 -m pip install --user --upgrade pip
                 '''
             }
