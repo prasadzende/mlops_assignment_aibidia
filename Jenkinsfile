@@ -6,17 +6,15 @@ pipeline {
     }
 
     stages {
-        stage('Install System Dependencies') {
-            steps {
-                sh '''
-                    # Give Jenkins user permissions to install packages
-                    echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-                    sudo apt-get -y update
-                    sudo apt-get install -y make curl python3 python3-pip
-                    python3 -m pip install --user --upgrade pip
-                '''
-            }
-        }
+        // stage('Install System Dependencies') {
+        //     steps {
+        //         sh '''
+        //             sudo apt-get -y update
+        //             sudo apt-get install -y make curl python3 python3-pip
+        //             python3 -m pip install --user --upgrade pip
+        //         '''
+        //     }
+        // }
 
         stage('Checkout') {
             steps {
