@@ -1,11 +1,6 @@
 pipeline {
 
-    agent {
-        docker {
-            image 'python:3.11-slim'
-            args '-u root'  // Run as root to have permissions for package installation
-        }
-    }
+    agent any
 
 
     triggers {
