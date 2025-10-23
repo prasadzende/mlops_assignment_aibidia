@@ -8,14 +8,14 @@ pipeline {
     }
 
     stages {
-        stage('Install System Dependencies') {
-            steps {
-                sh '''
-                    apt-get update
-                    apt-get install -y make curl
-                '''
-            }
-        }
+        // stage('Install System Dependencies') {
+        //     steps {
+        //         sh '''
+        //             apt-get update
+        //             apt-get install -y make curl
+        //         '''
+        //     }
+        // }
 
         stage('Checkout') {
             steps {
