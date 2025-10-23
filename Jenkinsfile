@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11-slim'
+            args '-u root'  // Run as root user
+        }
+    }
 
     triggers {
         pollSCM('* * * * *')  // Poll SCM every minute for changes
@@ -10,7 +15,7 @@ pipeline {
             steps {
                 sh '''
                     apt-get update
-                    apt-get install -y make curl python3 python3-pip
+                    apt-get install -y make curl
                 '''
             }
         }
