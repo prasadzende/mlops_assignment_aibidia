@@ -1,4 +1,9 @@
 pipeline {
+
+    environment {
+        PATH = "/opt/homebrew/bin:${env.PATH}"
+    }
+
     agent {
         docker {
             image 'python:3.11-slim'
@@ -6,9 +11,6 @@ pipeline {
         }
     }
 
-    environment {
-        PATH = "/opt/homebrew/bin:${env.PATH}"
-    }
 
     triggers {
         pollSCM('* * * * *')  // Poll SCM every minute for changes
