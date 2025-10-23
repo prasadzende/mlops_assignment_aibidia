@@ -1,20 +1,24 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11-slim'
+            args '-u root'  // Run as root to have permissions for package installation
+        }
+    }
 
     triggers {
         pollSCM('* * * * *')  // Poll SCM every minute for changes
     }
 
     stages {
-        // stage('Install System Dependencies') {
-        //     steps {
-        //         sh '''
-        //             sudo apt-get -y update
-        //             sudo apt-get install -y make curl python3 python3-pip
-        //             python3 -m pip install --user --upgrade pip
-        //         '''
-        //     }
-        // }
+        stage('Install System Dependencies') {
+            steps {
+                sh '''
+                    apt-get update
+                    apt-get install -y make curl
+                '''
+            }
+        }
 
         stage('Checkout') {
             steps {
@@ -23,18 +27,22 @@ pipeline {
             }
         }
 
-        // stage('Setup Environment') {
-        //     steps {
-        //         dir('src/model_src') {
-        //             sh 'make setup'
-        //         }
-        //     }
-        // }
+        stage('Setup Environment') {
+            steps {
+                dir('src/model_src') {
+                    sh '''
+                        python -m pip install --upgrade pip
+                        python -m pip install pdm
+                        make setup
+                    '''
+                }
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
                 dir('src/model_src') {
-                    sh 'ls -lrt && make install'
+                    sh 'make install'
                 }
             }
         }
