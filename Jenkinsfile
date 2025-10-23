@@ -6,6 +6,10 @@ pipeline {
         }
     }
 
+    environment {
+        PATH = "/opt/homebrew/bin:${env.PATH}"
+    }
+
     triggers {
         pollSCM('* * * * *')  // Poll SCM every minute for changes
     }
