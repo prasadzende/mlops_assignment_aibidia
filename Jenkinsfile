@@ -1,9 +1,5 @@
 pipeline {
 
-    environment {
-        PATH = "/opt/homebrew/bin:${env.PATH}"
-    }
-
     agent {
         docker {
             image 'python:3.11-slim'
