@@ -27,9 +27,9 @@ jobs:
           make install
           make train-no-registration
       
-      - name: Copy model to API directory
-        working-directory: ./
-        run: make copy-model
+      # - name: Copy model to API directory
+      #   working-directory: ./
+      #   run: make copy-model
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
