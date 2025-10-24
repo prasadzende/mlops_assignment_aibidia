@@ -24,7 +24,7 @@ setup:
 # Install dependencies using PDM
 install:
 	@echo "Installing dependencies..."
-	@cd ./src/model_src && $(PDM) install
+	@cd ./src/model_src && $(PDM) sync --prod
 	@echo "Dependencies installation completed"
 
 # Train the model with default parameters
