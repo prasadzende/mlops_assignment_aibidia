@@ -3,14 +3,14 @@
 # Variables
 PYTHON := python3
 PDM := pdm
-TRAIN_SCRIPT := train.py
+TRAIN_SCRIPT := ./src/model_src/train.py
 
 # Docker variables
 DOCKER_HUB_USERNAME := prasadzende
 DOCKER_IMAGE_NAME := iris-fastapi
 DOCKER_IMAGE_TAG := latest
 CONTAINER_NAME := iris-api-container
-MODEL_FILE := iris_model.pkl
+MODEL_FILE := ./src/model_src/iris_model.pkl
 
 # Default target
 all: setup install train
@@ -24,6 +24,7 @@ setup:
 # Install dependencies using PDM
 install:
 	@echo "Installing dependencies..."
+	@cd ./src/model_src
 	@$(PDM) install
 	@echo "Dependencies installation completed"
 
@@ -51,14 +52,13 @@ train-no-registration:
 # Copy model to API directory
 copy-model:
 	@echo "Copying model to api directory..."
-	@mkdir -p ../api
-	@cp $(MODEL_FILE) ../api/
-	@echo "Model copied to ../api/"
+	@cp $(MODEL_FILE) ./src/api/
+	@echo "Model copied to .src/api/"
 
 # Docker tasks
 build-docker:
 	@echo "Building docker image..."
-	@docker build -t $(DOCKER_HUB_USERNAME)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) ../api
+	@docker build -t $(DOCKER_HUB_USERNAME)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) .src/api/Dockerfile
 	@echo "Docker image built"
 
 push-docker:

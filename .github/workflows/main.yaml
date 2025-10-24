@@ -21,14 +21,14 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies and train model
-        working-directory: ./src/model_src
+        working-directory: ./
         run: |
           make setup
           make install
           make train-no-registration
       
       - name: Copy model to API directory
-        working-directory: ./src/model_src
+        working-directory: ./
         run: make copy-model
 
       - name: Set up Docker Buildx
@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build, run, and test Docker image
-        working-directory: ./src/api
+        working-directory: ./
         run: |
           make build-docker
           make run-docker
