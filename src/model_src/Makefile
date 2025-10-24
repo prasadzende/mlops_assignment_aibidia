@@ -37,7 +37,7 @@ train-no-registration:
         --max-iter 200 \
         --solver lbfgs \
         --random-state 42 \
-        --test-size 0.2
+        --test-size 0.2 \
 		--no-register-model
 	@echo "Training completed"
 
