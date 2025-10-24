@@ -57,7 +57,7 @@ copy-model:
 # Docker tasks
 build-docker:
 	@echo "Building docker image..."
-	@docker build -t $(DOCKER_HUB_USERNAME)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) .src/api/Dockerfile
+	@docker build -t $(DOCKER_HUB_USERNAME)/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) ./src/api/Dockerfile
 	@echo "Docker image built"
 
 push-docker:
