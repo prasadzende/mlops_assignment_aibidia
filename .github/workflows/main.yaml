@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build, run, and test Docker image
-        working-directory: ./src/model_src
+        working-directory: ./src/api
         run: |
           make build-docker
           make run-docker
