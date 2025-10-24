@@ -19,6 +19,10 @@ def parse_args():
                         help='Algorithm to use in optimization (default: lbfgs)')
     parser.add_argument('--test-size', type=float, default=0.2,
                         help='Test set size ratio (default: 0.2)')
+    parser.add_argument('--mlflow-tracking-uri', type=str, default=None,
+                        help='MLflow tracking server URI. If not set, MLflow tracks locally.')
+    parser.add_argument('--no-register-model', action='store_true',
+                        help='Do not register the model in MLflow Model Registry.')
     return parser.parse_args()
 
 def main():
@@ -26,7 +30,10 @@ def main():
     args = parse_args()
     
     warnings.filterwarnings('ignore')
-    mlflow.set_tracking_uri("http://localhost:5005")
+    if args.mlflow_tracking_uri:
+        mlflow.set_tracking_uri(args.mlflow_tracking_uri)
+    else:
+        print("MLflow tracking URI not set, tracking locally to './mlruns'")
 
     # Load and split data
     X, y = load_iris(return_X_y=True)
@@ -69,23 +76,31 @@ def main():
             "f1_score": f1
         })
         
-        # Log and register model
-        model_info = mlflow.sklearn.log_model(
-            sk_model=model,
-            artifact_path="model",
-            input_example=input_example,
-            registered_model_name=MODEL_NAME
-        )
-        
-        # Get the client and latest version
-        client = mlflow.tracking.MlflowClient()
-        latest_version = max([
-            int(mv.version) for mv in 
-            client.search_model_versions(f"name='{MODEL_NAME}'")
-        ])
-        
-        print(f"Model {MODEL_NAME} version {latest_version} has been registered")
-        
+        # Log and optionally register model
+        if not args.no_register_model:
+            model_info = mlflow.sklearn.log_model(
+                sk_model=model,
+                artifact_path="model",
+                input_example=input_example,
+                registered_model_name=MODEL_NAME
+            )
+            
+            # Get the client and latest version
+            client = mlflow.tracking.MlflowClient()
+            latest_version = max([
+                int(mv.version) for mv in 
+                client.search_model_versions(f"name='{MODEL_NAME}'")
+            ])
+            
+            print(f"Model {MODEL_NAME} version {latest_version} has been registered")
+        else:
+            model_info = mlflow.sklearn.log_model(
+                sk_model=model,
+                artifact_path="model",
+                input_example=input_example
+            )
+            print("Model logged as an artifact but not registered.")
+
         # Save model locally
         joblib.dump(model, "iris_model.pkl")
         

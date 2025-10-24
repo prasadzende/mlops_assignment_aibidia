@@ -27,7 +27,18 @@ train:
         --max-iter 200 \
         --solver lbfgs \
         --random-state 42 \
+        --test-size 0.2 \
+		--mlflow-tracking-uri http://localhost:5005
+	@echo "Training completed"
+
+train-no-registration:
+	@echo "Training model without MLflow registration..."
+	@$(PDM) run python $(TRAIN_SCRIPT) \
+        --max-iter 200 \
+        --solver lbfgs \
+        --random-state 42 \
         --test-size 0.2
+		--no-register-model
 	@echo "Training completed"
 
 # Clean up generated files
