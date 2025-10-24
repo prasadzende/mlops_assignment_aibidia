@@ -3,7 +3,7 @@
 # Variables
 PYTHON := python3
 PDM := pdm
-TRAIN_SCRIPT := ./src/model_src/train.py
+TRAIN_SCRIPT := train.py
 
 # Docker variables
 DOCKER_HUB_USERNAME := prasadzende
@@ -30,7 +30,7 @@ install:
 # Train the model with default parameters
 train:
 	@echo "Training model..."
-	@$(PDM) run python $(TRAIN_SCRIPT) \
+	@cd ./src/model_src && pdm run python $(TRAIN_SCRIPT) \
         --max-iter 200 \
         --solver lbfgs \
         --random-state 42 \
@@ -40,7 +40,7 @@ train:
 
 train-no-registration:
 	@echo "Training model without MLflow registration..."
-	@$(PDM) run python $(TRAIN_SCRIPT) \
+	@cd ./src/model_src && pdm run python $(TRAIN_SCRIPT) \
         --max-iter 200 \
         --solver lbfgs \
         --random-state 42 \
