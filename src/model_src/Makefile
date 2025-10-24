@@ -51,6 +51,7 @@ train-no-registration:
 # Copy model to API directory
 copy-model:
 	@echo "Copying model to api directory..."
+	@mkdir -p ../api
 	@cp $(MODEL_FILE) ../api/
 	@echo "Model copied to ../api/"
 
